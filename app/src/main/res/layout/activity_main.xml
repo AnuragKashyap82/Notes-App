@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8E8E8"
+    tools:context=".Activities.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/filterLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_filter_white"
+            android:background="@drawable/filte_shape"
+            android:elevation="4dp"
+            app:tint="@color/red"
+            android:padding="4dp"
+            android:layout_margin="10dp"/>
+
+        <TextView
+            android:id="@+id/noFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Filter"
+            android:fontFamily="@font/nunito_light"
+            android:background="@drawable/filte_shape"
+            android:paddingStart="10dp"
+            android:layout_margin="5dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/filterHighToLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="High to Low"
+            android:fontFamily="@font/nunito_light"
+            android:background="@drawable/filte_shape"
+            android:paddingStart="10dp"
+            android:layout_margin="5dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/filteLowToHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Low to High"
+            android:fontFamily="@font/nunito_light"
+            android:background="@drawable/filte_shape"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_margin="5dp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notesRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/filterLl"
+        android:layout_marginBottom="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/item_notes" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/newNotesBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:elevation="10dp"
+        android:layout_margin="26dp"
+        app:tint="@color/white"
+        android:src="@drawable/ic_add_black"/>
+
+
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package kashyap.anurag.notesapp.Adapters;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.notesViewHol
 
     MainActivity mainActivity;
     List<Notes> notes;
-    List<Notes> allNotesItem;
 
     public NotesAdapter(MainActivity mainActivity, List<Notes> notes) {
         this.mainActivity = mainActivity;
         this.notes = notes;
-        allNotesItem = new ArrayList<>(notes);
+
     }
 
     public void searchNotes(List<Notes> filteredName){
@@ -61,6 +61,19 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.notesViewHol
                 holder.notesPriority.setBackgroundResource(R.drawable.red_shape);
                 break;
         }
+        if (note.getImagePath() != null){
+            holder.imageNote.setImageBitmap(BitmapFactory.decodeFile(note.getImagePath()));
+            holder.imageNote.setVisibility(View.VISIBLE);
+        }else {
+            holder.imageNote.setVisibility(View.GONE);
+
+        }
+        if (note.getWebLink() != null){
+            holder.webURL.setVisibility(View.VISIBLE);
+            holder.webURL.setText(note.webLink);
+        }else {
+            holder.webURL.setVisibility(View.GONE);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +83,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.notesViewHol
                 intent.putExtra("subTitle", note.notesSubtitle);
                 intent.putExtra("priority", note.notesPriority);
                 intent.putExtra("notes", note.notes);
+                intent.putExtra("webURL", note.webLink);
+                intent.putExtra("image", note.imagePath);
+                intent.putExtra("note", note);
                 mainActivity.startActivity(intent);
             }
         });
@@ -82,16 +98,19 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.notesViewHol
 
     class notesViewHolder extends RecyclerView.ViewHolder {
 
-        TextView date, notesData, notesTitle;
+        TextView date, notesData, notesTitle, webURL;
         View notesPriority;
+        ImageView imageNote;
 
         public notesViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            notesTitle = itemView.findViewById(R.id.notesTitle);
-            notesData = itemView.findViewById(R.id.notesData);
+            notesTitle = itemView.findViewById(R.id.updateTitle);
+            notesData = itemView.findViewById(R.id.updateNotes);
             date = itemView.findViewById(R.id.date);
             notesPriority = itemView.findViewById(R.id.notesPriority);
+            imageNote = itemView.findViewById(R.id.imageNote);
+            webURL = itemView.findViewById(R.id.webURL);
         }
     }
 }

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:elevation="7dp"
+    android:backgroundTint="@color/colorSearchBackground"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp"
+    app:cardCornerRadius="25sp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp" >
+
+        <RelativeLayout
+            android:id="@+id/noFilterRl"
+            android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/productImage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/button_background"
+                android:backgroundTint="@color/red"
+                android:src="@drawable/ic_filter_white"
+                android:padding="8dp"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No Filter"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:fontFamily="@font/nuniti_bold"
+                android:layout_toEndOf="@id/productImage"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="4dp"/>
+
+            <TextView
+                android:id="@+id/option1Tv"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:text="Notes will be in default filter"
+                android:textSize="14sp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:layout_below="@id/tv"
+                android:fontFamily="@font/nunito_light"
+                android:layout_toEndOf="@id/productImage"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="4dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/filterHighToLow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/noFilterRl"
+            android:layout_marginTop="16dp">
+
+            <ImageView
+                android:id="@+id/iv"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/button_background"
+                android:backgroundTint="@color/red"
+                android:src="@drawable/ic_filter_white"
+                android:padding="8dp"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filter High to Low"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/nuniti_bold"
+                android:textStyle="bold"
+                android:layout_toEndOf="@id/iv"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="4dp"/>
+
+            <TextView
+                android:id="@+id/option2Tv"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:text="Notes will be filtered in High to Low Priority"
+                android:textSize="14sp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:fontFamily="@font/nunito_light"
+                android:layout_below="@id/tv1"
+                android:layout_toEndOf="@id/iv"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="4dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/filterLowToHigh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/filterHighToLow"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp">
+
+            <ImageView
+                android:id="@+id/iv2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/button_background"
+                android:backgroundTint="@color/red"
+                android:padding="8dp"
+                android:src="@drawable/ic_filter_white"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tv4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Low to High"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:fontFamily="@font/nuniti_bold"
+                android:layout_toEndOf="@id/iv2"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="4dp"/>
+
+            <TextView
+                android:id="@+id/option3Tv"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:text="Notes will be filtered in Low to High Priority"
+                android:textSize="14sp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:layout_below="@id/tv4"
+                android:layout_toEndOf="@id/iv2"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/nunito_light"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="4dp"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

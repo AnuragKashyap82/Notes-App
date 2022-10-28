@@ -12,9 +12,9 @@ import kashyap.anurag.notesapp.Repository.NotesRepository;
 public class NotesViewModel extends AndroidViewModel {
 
     public NotesRepository repository;
-    public LiveData<List<Notes>> getallNotes;
-    public LiveData<List<Notes>> highToLow;
-    public LiveData<List<Notes>> lowToHigh;
+    public List<Notes> getallNotes;
+    public List<Notes> highToLow;
+    public List<Notes> lowToHigh;
 
     public NotesViewModel(Application application) {
         super(application);

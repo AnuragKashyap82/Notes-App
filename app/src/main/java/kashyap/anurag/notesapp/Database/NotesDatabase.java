@@ -8,10 +8,9 @@ import androidx.room.RoomDatabase;
 import kashyap.anurag.notesapp.Dao.NotesDao;
 import kashyap.anurag.notesapp.Model.Notes;
 
-@Database(entities = {Notes.class}, version = 1)
+@Database(entities = {Notes.class}, version = 1, exportSchema = false)
 public abstract class NotesDatabase extends RoomDatabase {
 
-    public abstract NotesDao notesDao();
     public static NotesDatabase INSTANCE;
 
     public static NotesDatabase getDatabaseInstance(Context context){
@@ -19,9 +18,11 @@ public abstract class NotesDatabase extends RoomDatabase {
         if (INSTANCE == null){
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     NotesDatabase.class,
-                    "Notes_Database").allowMainThreadQueries().build();
+                    "Notes_Database").build();
+//
         }
         return INSTANCE;
     }
+    public abstract NotesDao notesDao();
 
 }

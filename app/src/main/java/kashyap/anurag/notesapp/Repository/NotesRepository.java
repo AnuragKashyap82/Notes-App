@@ -12,9 +12,9 @@ import kashyap.anurag.notesapp.Model.Notes;
 public class NotesRepository {
 
     public NotesDao notesDao;
-    public LiveData<List<Notes>> getallNotes;
-    public LiveData<List<Notes>> highToLow;
-    public LiveData<List<Notes>> lowToHigh;
+    public List<Notes> getallNotes;
+    public List<Notes> highToLow;
+    public List<Notes> lowToHigh;
 
     public NotesRepository(Application application) {
         NotesDatabase database = NotesDatabase.getDatabaseInstance(application);

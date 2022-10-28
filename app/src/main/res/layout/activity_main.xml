@@ -4,67 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8E8E8"
+    android:background="@color/colorPrimary"
     tools:context=".Activities.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/filterLl"
+    <TextView
+        android:id="@+id/textMyNotes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:orientation="horizontal">
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:fontFamily="@font/nuniti_bold"
+        android:includeFontPadding="false"
+        android:text="My Notes"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_filter_white"
-            android:background="@drawable/filte_shape"
-            android:elevation="4dp"
-            app:tint="@color/red"
-            android:padding="4dp"
-            android:layout_margin="10dp"/>
+    <LinearLayout
+        android:id="@+id/layoutSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/search_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_below="@id/textMyNotes"
+        android:layout_marginEnd="8dp">
 
-        <TextView
-            android:id="@+id/noFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No Filter"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/inputSearch"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginStart="0dp"
+            app:actionViewClass="android.widget.SearchView"
+            android:background="@null"
+            style="@style/SearchViewStyle"
+            app:iconifiedByDefault="false"
+            app:queryHint="Search Notes here...."
             android:fontFamily="@font/nunito_light"
-            android:background="@drawable/filte_shape"
-            android:paddingStart="10dp"
-            android:layout_margin="5dp"
-            android:paddingEnd="10dp"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
-            android:layout_gravity="center_vertical"/>
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:clickable="true"
+            android:textColor="@color/white"
+            android:includeFontPadding="false"
+            android:inputType="text"
+            android:textColorHint="@color/gray"
+            android:textSize="14sp"/>
 
-        <TextView
-            android:id="@+id/filterHighToLow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="High to Low"
-            android:fontFamily="@font/nunito_light"
-            android:background="@drawable/filte_shape"
-            android:paddingStart="10dp"
-            android:layout_margin="5dp"
-            android:paddingEnd="10dp"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
-            android:layout_gravity="center_vertical"/>
-
-        <TextView
-            android:id="@+id/filteLowToHigh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Low to High"
-            android:fontFamily="@font/nunito_light"
-            android:background="@drawable/filte_shape"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:layout_margin="5dp"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
-            android:layout_gravity="center_vertical"/>
 
     </LinearLayout>
 
@@ -72,24 +62,70 @@
         android:id="@+id/notesRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/filterLl"
-        android:layout_marginBottom="2dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="2dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_notes" />
+        android:layout_below="@id/layoutSearch"
+        android:layout_above="@id/layoutQuickAction"
+        android:clipToPadding="false"
+        android:paddingEnd="4dp"
+        android:paddingStart="4dp"
+        android:visibility="visible"
+        tools:listitem="@layout/item_notes"
+        android:layout_marginTop="15dp"
+        android:paddingBottom="12dp"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/newNotesBtn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/layoutQuickAction"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorSearchBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/imageNote"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_baseline_add_circle_outline_24"
+            app:tint="@color/white"/>
+
+        <ImageView
+            android:id="@+id/filterBtn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="18dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_filter_white"
+            app:tint="@color/white"/>
+
+        <TextView
+            android:id="@+id/filterTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:fontFamily="@font/nuniti_bold"
+            android:textColor="@color/white"
+            android:layout_marginStart="18dp"
+            android:text="Filter Notes"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/newNotesBtn"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_above="@id/layoutQuickAction"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-20dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/yellow_shape"
+        android:contentDescription="@string/app_name"
         android:elevation="10dp"
-        android:layout_margin="26dp"
-        app:tint="@color/white"
-        android:src="@drawable/ic_add_black"/>
+        android:padding="14sp"
+        android:src="@drawable/ic_add_black"
+        app:tint="@color/background" />
 
 
 </RelativeLayout>

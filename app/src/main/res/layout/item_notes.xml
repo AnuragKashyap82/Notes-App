@@ -7,55 +7,92 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="7dp"
+        android:layout_margin="4dp"
         app:cardCornerRadius="10dp"
+        android:backgroundTint="@color/colorSearchBackground"
         android:elevation="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp">
+            android:layout_height="wrap_content">
 
-            <View
-                android:id="@+id/notesPriority"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/green_shape" />
-
-            <TextView
-                android:id="@+id/notesTitle"
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imageNote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_toStartOf="@id/notesPriority"
-                android:textColor="@color/black"
-                android:fontFamily="@font/nunito_light"
-                android:text="Title"/>
+                android:adjustViewBounds="true"
+                app:riv_corner_radius_top_left="10dp"
+                app:riv_corner_radius_top_right="10dp"
+                android:visibility="gone"/>
 
-            <TextView
-                android:id="@+id/notesData"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_below="@id/notesTitle"
-                android:textColor="@color/black"
-                android:fontFamily="@font/nunito_light"
-                android:text="SubTitle"/>
+                android:layout_below="@id/imageNote"
+                android:layout_margin="10dp">
 
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="08 feb 2022"
-                android:padding="5dp"
-                android:layout_below="@id/notesData"
-                android:textColor="@color/black"
-                android:fontFamily="@font/nuniti_bold"/>
+                <View
+                    android:id="@+id/notesPriority"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/green_shape" />
+
+                <TextView
+                    android:id="@+id/updateTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:includeFontPadding="false"
+                    android:layout_toStartOf="@id/notesPriority"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/nunito_light"
+                    android:text="Title"/>
+
+                <TextView
+                    android:id="@+id/webURL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_below="@id/updateTitle"
+                    android:textColor="@color/red"
+                    android:autoLink="web"
+                    android:textStyle="normal"
+                    android:visibility="gone"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/nunito_light"
+                    android:text="webURL"/>
+
+                <TextView
+                    android:id="@+id/updateNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_below="@id/webURL"
+                    android:textColor="@color/white"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/nunito_light"
+                    android:text="SubTitle"/>
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="08 feb 2022"
+                    android:padding="5dp"
+                    android:includeFontPadding="false"
+                    android:layout_below="@id/updateNotes"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/nuniti_bold"/>
+
+            </RelativeLayout>
+
 
         </RelativeLayout>
+
+
 
     </androidx.cardview.widget.CardView>
 </LinearLayout>

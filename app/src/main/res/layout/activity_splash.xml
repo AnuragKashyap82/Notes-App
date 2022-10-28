@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".Activities.SplashActivity">
 
     <ImageView
@@ -50,7 +51,7 @@
         android:id="@+id/textView3"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Notes NotesNotes NotesNotes NotesNotes NotesNotes Notes "
+        android:text="Keep all your important Notes including images and web URL"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:fontFamily="@font/nunito_light"

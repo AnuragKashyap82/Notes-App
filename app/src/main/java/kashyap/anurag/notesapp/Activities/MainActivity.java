@@ -1,33 +1,34 @@
 package kashyap.anurag.notesapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
+
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import kashyap.anurag.notesapp.Adapters.NotesAdapter;
+import kashyap.anurag.notesapp.Database.NotesDatabase;
 import kashyap.anurag.notesapp.Model.Notes;
 import kashyap.anurag.notesapp.R;
-import kashyap.anurag.notesapp.ViewModel.NotesViewModel;
 import kashyap.anurag.notesapp.databinding.ActivityMainBinding;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.SearchView;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
-    NotesViewModel notesViewModel;
-    NotesAdapter adapter;
-
-    List<Notes> filterNotesAllList;
+    NotesAdapter notesAdapter;
+    List<Notes> noteList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,96 +36,26 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        notesViewModel = ViewModelProviders.of(this).get(NotesViewModel.class);
-        binding.noFilter.setBackgroundResource(R.drawable.filte_selected_shape);
+        noteList = new ArrayList<>();
+        binding.notesRv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        notesAdapter = new NotesAdapter(MainActivity.this, noteList);
+        binding.notesRv.setAdapter(notesAdapter);
 
         loadData(0);
 
         binding.newNotesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, InsertNotesActivity.class));
-            }
-        });
-        binding.noFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadData(0);
-                binding.noFilter.setBackgroundResource(R.drawable.filte_selected_shape);
-                binding.filterHighToLow.setBackgroundResource(R.drawable.filte_shape);
-                binding.filteLowToHigh.setBackgroundResource(R.drawable.filte_shape);
-            }
-        });
-        binding.filteLowToHigh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadData(1);
-                binding.filteLowToHigh.setBackgroundResource(R.drawable.filte_selected_shape);
-                binding.noFilter.setBackgroundResource(R.drawable.filte_shape);
-                binding.filterHighToLow.setBackgroundResource(R.drawable.filte_shape);
-            }
-        });
-        binding.filterHighToLow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadData(2);
-                binding.filterHighToLow.setBackgroundResource(R.drawable.filte_selected_shape);
-                binding.noFilter.setBackgroundResource(R.drawable.filte_shape);
-                binding.filteLowToHigh.setBackgroundResource(R.drawable.filte_shape);
+                Intent intent  = new Intent(MainActivity.this, InsertNotesActivity.class);
+                startActivity(intent);
             }
         });
 
-        notesViewModel.getallNotes.observe(this, new Observer<List<Notes>>() {
-            @Override
-            public void onChanged(List<Notes> notes) {
-                setAdapter(notes);
-            }
-        });
-    }
-
-    private void loadData(int i) {
-        if (i==0){
-            notesViewModel.getallNotes.observe(this, new Observer<List<Notes>>() {
-                @Override
-                public void onChanged(List<Notes> notes) {
-                    setAdapter(notes);
-                    filterNotesAllList = notes;
-                }
-            });
-        }else if (i==1){
-            notesViewModel.lowToHigh.observe(this, new Observer<List<Notes>>() {
-                @Override
-                public void onChanged(List<Notes> notes) {
-                    setAdapter(notes);
-                    filterNotesAllList = notes;
-                }
-            });
-        }else if (i == 2){
-            notesViewModel.highToLow.observe(this, new Observer<List<Notes>>() {
-                @Override
-                public void onChanged(List<Notes> notes) {
-                    setAdapter(notes);
-                    filterNotesAllList = notes;
-                }
-            });
-        }
-    }
-
-    public void setAdapter(List<Notes> notes) {
-        binding.notesRv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        adapter = new NotesAdapter(MainActivity.this, notes);
-        binding.notesRv.setAdapter(adapter);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.search_notes, menu);
-
-        MenuItem menuItem = menu.findItem(R.id.appBarSearch);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Search Notes here!!!");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        SearchView inputSearch = findViewById(R.id.inputSearch);
+        EditText searchEditText = (EditText) inputSearch.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchEditText.setTextColor(getResources().getColor(R.color.white));
+        searchEditText.setHintTextColor(Color.GRAY);
+        inputSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return true;
@@ -137,16 +68,149 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        return super.onCreateOptionsMenu(menu);
+        binding.filterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFilterDialog();
+            }
+        });
+        binding.filterTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFilterDialog();
+            }
+        });
+    }
+
+    private void loadData(int i) {
+        if (i==0){
+            @SuppressLint("StaticFieldLeak")
+            class GetNotesTask extends AsyncTask<Void, Void, List<Notes>> {
+
+                @Override
+                protected List<Notes> doInBackground(Void... voids) {
+                    return NotesDatabase.getDatabaseInstance(getApplicationContext()).notesDao().getallNotes();
+                }
+
+                @Override
+                protected void onPostExecute(List<Notes> notes) {
+                    super.onPostExecute(notes);
+                    if (noteList.size() == 0){
+                        noteList.addAll(notes);
+                        notesAdapter.notifyDataSetChanged();
+                    }else {
+                        noteList.add(0, notes.get(0));
+                        notesAdapter.notifyItemInserted(0);
+
+
+                    }
+                    binding.notesRv.smoothScrollToPosition(0);
+                }
+            }
+            new GetNotesTask().execute();
+
+        }else if (i==1){
+
+            @SuppressLint("StaticFieldLeak")
+            class GetNotesTask extends AsyncTask<Void, Void, List<Notes>> {
+
+                @Override
+                protected List<Notes> doInBackground(Void... voids) {
+                    return NotesDatabase.getDatabaseInstance(getApplicationContext()).notesDao().lowToHigh();
+                }
+
+                @Override
+                protected void onPostExecute(List<Notes> notes) {
+                    super.onPostExecute(notes);
+                    if (noteList.size() == 0){
+                        noteList.addAll(notes);
+                        notesAdapter.notifyDataSetChanged();
+
+                    }else {
+                        noteList.clear();
+                        noteList.addAll(notes);
+                        notesAdapter.notifyDataSetChanged();
+
+                    }
+
+                }
+            }
+            new GetNotesTask().execute();
+
+        }else if (i == 2){
+            @SuppressLint("StaticFieldLeak")
+            class GetNotesTask extends AsyncTask<Void, Void, List<Notes>> {
+
+                @Override
+                protected List<Notes> doInBackground(Void... voids) {
+                    return NotesDatabase.getDatabaseInstance(getApplicationContext()).notesDao().highToLow();
+                }
+
+                @Override
+                protected void onPostExecute(List<Notes> notes) {
+                    super.onPostExecute(notes);
+                    if (noteList.size() == 0){
+                        noteList.addAll(notes);
+                        notesAdapter.notifyDataSetChanged();
+
+                    }else {
+                        noteList.clear();
+                        noteList.addAll(notes);
+                        notesAdapter.notifyDataSetChanged();
+
+                    }
+
+                }
+            }
+            new GetNotesTask().execute();
+        }
     }
 
     private void NotesFilter(String newText) {
         ArrayList<Notes> filterNames = new ArrayList<>();
-        for (Notes notes : this.filterNotesAllList){
-            if (notes.notesTitle.toLowerCase().contains(newText.toLowerCase()) || notes.notesSubtitle.toLowerCase().contains(newText.toLowerCase())){
+        for (Notes notes : this.noteList){
+            if (notes.notesTitle.toLowerCase().contains(newText.toLowerCase()) || notes.notes.toLowerCase().contains(newText.toLowerCase())
+                    || notes.notesDate.toLowerCase().contains(newText.toLowerCase()) || notes.notesSubtitle.toLowerCase().contains(newText.toLowerCase())){
                 filterNames.add(notes);
             }
         }
-        this.adapter.searchNotes(filterNames);
+        this.notesAdapter.searchNotes(filterNames);
+    }
+    private void showFilterDialog() {
+        Dialog filterDialog = new Dialog(MainActivity.this, R.style.BottomSheetStyle);
+        filterDialog.setContentView(R.layout.filter_dialog);
+        filterDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        RelativeLayout noFilterRl = filterDialog.findViewById(R.id.noFilterRl);
+        RelativeLayout filterHighToLow = filterDialog.findViewById(R.id.filterHighToLow);
+        RelativeLayout filterLowToHigh = filterDialog.findViewById(R.id.filterLowToHigh);
+
+
+        filterDialog.setCancelable(true);
+
+        noFilterRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                noteList.clear();
+                loadData(0);
+                filterDialog.dismiss();
+            }
+        });
+        filterLowToHigh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filterDialog.dismiss();
+                loadData(1);
+
+            }
+        });
+        filterHighToLow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filterDialog.dismiss();
+                loadData(2);
+            }
+        });
+        filterDialog.show();
     }
 }

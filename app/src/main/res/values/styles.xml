@@ -6,9 +6,25 @@
         <item name="bottomSheetStyle">@style/Modal</item>
 
     </style>
+
     <style name="Modal" parent="Widget.Design.BottomSheet.Modal">
 
         <item name="android:background">@drawable/delete_sheet</item>
 
     </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Gets rid of the search icon -->
+        <item name="searchIcon">@drawable/ic_search_white</item>
+        <!-- Gets rid of the "underline" in the text -->
+        <item name="queryBackground">@color/colorSearchBackground</item>
+        <!-- Gets rid of the search icon when the SearchView is expanded -->
+        <item name="searchHintIcon">@null</item>
+
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:editTextColor">@android:color/white</item>
+
+    </style>
+
 </resources>

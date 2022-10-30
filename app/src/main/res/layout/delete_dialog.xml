@@ -40,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="2"
+            android:backgroundTint="@color/colorSearchBackground"
             android:layout_marginTop="12sp"
             android:layout_below="@id/tv">
 

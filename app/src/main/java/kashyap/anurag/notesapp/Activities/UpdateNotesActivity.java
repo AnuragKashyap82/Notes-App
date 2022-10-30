@@ -157,6 +157,12 @@ public class UpdateNotesActivity extends AppCompatActivity {
                 showFilterDialog();
             }
         });
+        binding.backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
     private void showFilterDialog() {
         Dialog filterDialog = new Dialog(UpdateNotesActivity.this, R.style.BottomSheetStyle);

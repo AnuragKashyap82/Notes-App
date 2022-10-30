@@ -8,11 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProviders;
 import kashyap.anurag.notesapp.Database.NotesDatabase;
 import kashyap.anurag.notesapp.Model.Notes;
 import kashyap.anurag.notesapp.R;
-import kashyap.anurag.notesapp.ViewModel.NotesViewModel;
 import kashyap.anurag.notesapp.databinding.ActivityUpdateNotesBinding;
 
 
@@ -20,6 +18,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -34,18 +33,15 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Patterns;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.InputStream;
 import java.util.Date;
@@ -158,9 +154,36 @@ public class UpdateNotesActivity extends AppCompatActivity {
         binding.deleteNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteNote(iid);
+                showFilterDialog();
             }
         });
+    }
+    private void showFilterDialog() {
+        Dialog filterDialog = new Dialog(UpdateNotesActivity.this, R.style.BottomSheetStyle);
+        filterDialog.setContentView(R.layout.delete_dialog);
+        filterDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        Button deleteNote = filterDialog.findViewById(R.id.deleteNoteBtn);
+        Button cancelBtn = filterDialog.findViewById(R.id.cancelBtn);
+
+
+        filterDialog.setCancelable(true);
+
+        deleteNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteNote(iid);
+                filterDialog.dismiss();
+            }
+        });
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filterDialog.dismiss();
+
+            }
+        });
+        filterDialog.show();
     }
 
     private void setViewOrUpdateNote() {
